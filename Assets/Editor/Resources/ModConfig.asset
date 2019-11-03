@@ -15,7 +15,7 @@ MonoBehaviour:
   title: Divisible Numbers
   author: short_c1rcuit
   description: "Divisible Numbers\nWho cares about divisibility rules, just use calculator.\r\n\nModule
-    ID: divisibleNumbers\n\nCreated by Short_c1rcuit\n\nManual available here: https://ktane.timwi.de/HTML/Divisable%20Numbers.html\n\nBuild
+    ID: divisibleNumbers\n\nCreated by Short_c1rcuit\n\nManual available here: https://ktane.timwi.de/HTML/Divisible%20Numbers.html\n\nBuild
     1.0 notes:\nInitial release"
   version: 1.0
   outputFolder: build

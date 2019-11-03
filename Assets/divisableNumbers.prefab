@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 114625574213660530}
   - component: {fileID: 114727904521941062}
   - component: {fileID: 114395689195986560}
-  - component: {fileID: 114103061487759870}
+  - component: {fileID: 114040990501909598}
   m_Layer: 0
   m_Name: divisableNumbers
   m_TagString: Untagged
@@ -1269,20 +1269,7 @@ TextMesh:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
---- !u!114 &114075770248082184
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1047139134403262}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1005838349, guid: 45b809be76fd7a3468b6f517bced6f28, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShaderNames:
-  - KT/Mobile/DiffuseTint
---- !u!114 &114103061487759870
+--- !u!114 &114040990501909598
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -1290,7 +1277,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1181563213684844}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ee359def9beb534fbc126711c07da55, type: 3}
+  m_Script: {fileID: 11500000, guid: 98be1668afb55e24699160acb10b6482, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   bomb: {fileID: 114625574213660530}
@@ -1306,6 +1293,19 @@ MonoBehaviour:
   - {fileID: 23213799105315744}
   - {fileID: 23308224396502810}
   - {fileID: 23980360084060024}
+--- !u!114 &114075770248082184
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1047139134403262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1005838349, guid: 45b809be76fd7a3468b6f517bced6f28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShaderNames:
+  - KT/Mobile/DiffuseTint
 --- !u!114 &114142120220992070
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -1,0 +1,20 @@
+Divisible Numbers
+
+Who cares about divisibility rules, just use calculator.
+
+
+Module ID: divisibleNumbers
+
+
+
+Created by Short_c1rcuit
+
+
+
+Manual available here: https://ktane.timwi.de/HTML/Divisable%20Numbers.html
+
+
+
+Build 1.0 notes:
+
+Initial release

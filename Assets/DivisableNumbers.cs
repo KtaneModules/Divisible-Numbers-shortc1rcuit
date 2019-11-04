@@ -51,6 +51,27 @@ public class DivisableNumbers : MonoBehaviour {
 	int moduleId;
 	private bool moduleSolved;
 
+	//Twitch help message
+#pragma warning disable 414
+	private readonly string TwitchHelpMessage = @"Submit “YEA” with “!{0} y”. Submit “NAY” with “!{0} n”.";
+#pragma warning restore 414
+	
+	//This part takes the command and sees if it says yes or no then presses the correct button
+	public KMSelectable[] ProcessTwitchCommand(string command)
+	{
+		command = command.ToLowerInvariant().Trim();
+		if (command == "y")
+		{
+			return new[] { Yea };
+		}
+		else if (command == "n")
+		{
+			return new[] { Nay };
+		}
+		return null;
+	}
+	
+
 	void Awake()
 	{
 		moduleId = moduleIdCounter++;

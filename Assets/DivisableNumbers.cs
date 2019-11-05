@@ -128,18 +128,18 @@ public class DivisableNumbers : MonoBehaviour {
 			divisor = 10;
 		}
 
-		Debug.LogFormat("[Keypad Divisable #{0}] Your number must be divisable by {1}.", moduleId, divisor);
+		Debug.LogFormat("[Divisible Numbers #{0}] Your number must be divisable by {1}.", moduleId, divisor);
 
 		//Works out if the number is divisable by the divisor
 		divisable = (number % divisor == 0) & (number != 0);
 
 		if (divisable)
 		{
-			Debug.LogFormat("[Keypad Divisable #{0}] {1} is divisable by {2}.", moduleId, number, divisor);
+			Debug.LogFormat("[Divisible Numbers #{0}] {1} is divisable by {2}.", moduleId, number, divisor);
 		}
 		else
 		{
-			Debug.LogFormat("[Keypad Divisable #{0}] {1} isn't divisable by {2}.", moduleId, number, divisor);
+			Debug.LogFormat("[Divisible Numbers #{0}] {1} isn't divisable by {2}.", moduleId, number, divisor);
 		}
 		
 	}
@@ -166,7 +166,7 @@ public class DivisableNumbers : MonoBehaviour {
 		{
 			//Gives a strike and resets the module
 			GetComponent<KMBombModule>().HandleStrike();
-			Debug.LogFormat("[Keypad Divisable #{0}] Incorrect, resetting.", moduleId);
+			Debug.LogFormat("[Divisible Numbers #{0}] Incorrect, resetting.", moduleId);
 			ResetModule();
 		}
 	}
@@ -190,7 +190,7 @@ public class DivisableNumbers : MonoBehaviour {
 		{
 			//Gives a strike and resets the module
 			GetComponent<KMBombModule>().HandleStrike();
-			Debug.LogFormat("[Keypad Divisable #{0}] Incorrect, resetting.", moduleId);
+			Debug.LogFormat("[Divisible Numbers #{0}] Incorrect, resetting.", moduleId);
 			ResetModule();
 		}
 	}
@@ -203,7 +203,7 @@ public class DivisableNumbers : MonoBehaviour {
 			stages[2].material = Stagecolours[2];
 			moduleSolved = true;
 			GetComponent<KMBombModule>().HandlePass();
-			Debug.LogFormat("[Divisable Numbers #{0}] Module solved.", moduleId);
+			Debug.LogFormat("[Divisible Numbers #{0}] Module solved.", moduleId);
 		}
 		else
 		{
@@ -228,11 +228,11 @@ public class DivisableNumbers : MonoBehaviour {
 
 			if (divisable)
 			{
-				Debug.LogFormat("[Keypad Divisable #{0}] {1} is divisable by {2}.", moduleId, number, divisor);
+				Debug.LogFormat("[Divisible Numbers #{0}] {1} is divisable by {2}.", moduleId, number, divisor);
 			}
 			else
 			{
-				Debug.LogFormat("[Keypad Divisable #{0}] {1} isn't divisable by {2}.", moduleId, number, divisor);
+				Debug.LogFormat("[Divisible Numbers #{0}] {1} isn't divisable by {2}.", moduleId, number, divisor);
 			}
 		}
 	}
@@ -261,11 +261,11 @@ public class DivisableNumbers : MonoBehaviour {
 
 		if (divisable)
 		{
-			Debug.LogFormat("[Keypad Divisable #{0}] {1} is divisable by {2}.", moduleId, number, divisor);
+			Debug.LogFormat("[Divisible Numbers #{0}] {1} is divisable by {2}.", moduleId, number, divisor);
 		}
 		else
 		{
-			Debug.LogFormat("[Keypad Divisable #{0}] {1} isn't divisable by {2}.", moduleId, number, divisor);
+			Debug.LogFormat("[Divisible Numbers #{0}] {1} isn't divisable by {2}.", moduleId, number, divisor);
 		}
 	}
 

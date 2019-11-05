@@ -17,8 +17,12 @@ Manual available here: https://ktane.timwi.de/HTML/Divisible%20Numbers.html
 
 Build 1.0 notes:
 
-Initial release
+Initial release.
 
 Build 1.1 notes:
 
-Added Twitch Plays support
+Added Twitch Plays support.
+
+Build 1.2 notes:
+
+Fixed logging mistake

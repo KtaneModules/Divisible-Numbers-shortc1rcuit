@@ -53,18 +53,18 @@ public class DivisableNumbers : MonoBehaviour {
 
 	//Twitch help message
 #pragma warning disable 414
-	private readonly string TwitchHelpMessage = @"Submit “YEA” with “!{0} VoteYea”. Submit “NAY” with “!{0} VoteNay”.";
+	private readonly string TwitchHelpMessage = @"Submit “YEA” with “!{0} Y/VoteYea”. Submit “NAY” with “!{0} N/VoteNay”.";
 #pragma warning restore 414
 	
 	//This part takes the command and sees if it says yes or no then presses the correct button
 	public KMSelectable[] ProcessTwitchCommand(string command)
 	{
 		command = command.ToLowerInvariant().Trim();
-		if (command == "voteyea")
+		if (command == "voteyea" | command == "y")
 		{
 			return new[] { Yea };
 		}
-		else if (command == "votenay")
+		else if (command == "votenay" | command == "n")
 		{
 			return new[] { Nay };
 		}

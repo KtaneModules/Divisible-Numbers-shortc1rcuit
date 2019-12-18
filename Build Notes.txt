@@ -26,3 +26,7 @@ Added Twitch Plays support.
 Build 1.2 notes:
 
 Fixed logging mistake
+
+Build 1.3 notes:
+
+Changed Twitch Plays commands

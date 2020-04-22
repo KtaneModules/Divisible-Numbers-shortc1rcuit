@@ -77,13 +77,17 @@ public class DivisableNumbers : MonoBehaviour {
 		moduleId = moduleIdCounter++;
 		Yea.OnInteract += delegate () { YeaPress(); return false; };
 		Nay.OnInteract += delegate () { NayPress(); return false; };
+        GetComponent<KMBombModule>().OnActivate += OnActivate;
 	}
 
 	// Use this for initialization
-	void Start ()
+	void OnActivate()
 	{
-		//Generates the number for the next round
-		number = UnityEngine.Random.Range(0, 10000);
+        //The starting time of the bomb
+        float startingTime = bomb.GetTime() / 60;
+
+        //Generates the number for the next round
+        number = UnityEngine.Random.Range(0, 10000);
 		numbertext = number.ToString();
 		//Puts the number on the display and adds any needed 0s on the front for continuity.
 		while (numbertext.Length < 4)
@@ -111,7 +115,7 @@ public class DivisableNumbers : MonoBehaviour {
 		{
 			divisor = 6;
 		}
-		else if ((bomb.GetTime() / 60) < 10)
+        else if (startingTime < 10)
 		{
 			divisor = 4;
 		}

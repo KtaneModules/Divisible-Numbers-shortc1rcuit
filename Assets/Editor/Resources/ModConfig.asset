@@ -20,7 +20,7 @@ MonoBehaviour:
     1.0 notes:\r\nInitial release\r\n\r\nBuild 1.1 notes:\r\nAdded Twitch Plays support\r\n\r\nBuild
     1.2 notes:\r\nFixed logging mistake\r\n\r\nBuild 1.3 notes:\r\nChanged Twitch
     Plays commands\r\n\r\nBuild 1.3.1 notes:\r\nFixed Twitch Plays commands\r\n\r\nBuild
-    1.4 notes:\r\nFixed timekeeping bug"
-  version: 1.4
+    1.4 notes:\r\nFixed timekeeping bug\n\nBuild 1.5 notes:\nVR fix"
+  version: 1.5
   outputFolder: build
   previewImage: {fileID: 2800000, guid: 99fc510adab8b5a4d8ea8dacc88eeb25, type: 3}

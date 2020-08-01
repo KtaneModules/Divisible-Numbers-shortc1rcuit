@@ -24,3 +24,6 @@ Fixed Twitch Plays commands
 
 Build 1.4 notes:
 Fixed timekeeping bug
+
+Build 1.5 notes:
+VR fix

@@ -13,8 +13,8 @@ using UnityEngine;
 using System.Linq;
 using KModkit;
 
-public class DivisableNumbers : MonoBehaviour {
-
+public class DivisableNumbers : MonoBehaviour
+{
 	public KMBombInfo bomb;
 	public KMAudio Audio;
 
@@ -25,24 +25,31 @@ public class DivisableNumbers : MonoBehaviour {
 	//Text on the display
 	public TextMesh displaytext;
 
-	//The number you check that another number is divisable by
+	//The number you check that another number is divisible by
 	int divisor;
 
 	//The current round you are on
 	int round;
 
-	//The number checked to be divisable
+	//The number checked to be divisible
 	int number;
+
+	//Fields used in the successful solve of the module (used for Souv)
+	int[] finalNumbers = new int[3];
+	string[] finalAnswers = new string[3];
 
 	//Storage for the string form of the number 
 	string numbertext;
 
-	//Bool used to see wether the number is divisable or not
-	bool divisable;
+	//The starting time of the bomb
+	float startingTime;
+
+	//Bool used to see wether the number is divisible or not
+	bool divisible;
 
 	//Colours for the stage counter. 0 = white, 1 = gray, 2 = green
 	public Material[] Stagecolours;
-	
+
 	//Object that show the stage number
 	public Renderer[] stages;
 
@@ -55,7 +62,7 @@ public class DivisableNumbers : MonoBehaviour {
 #pragma warning disable 414
 	private readonly string TwitchHelpMessage = @"Submit “YEA” with “!{0} Y/VoteYea”. Submit “NAY” with “!{0} N/VoteNay”.";
 #pragma warning restore 414
-	
+
 	//This part takes the command and sees if it says yes or no then presses the correct button
 	public KMSelectable[] ProcessTwitchCommand(string command)
 	{
@@ -70,25 +77,27 @@ public class DivisableNumbers : MonoBehaviour {
 		}
 		return null;
 	}
-	
+
 
 	void Awake()
 	{
 		moduleId = moduleIdCounter++;
-		Yea.OnInteract += delegate () { YeaPress(); return false; };
-		Nay.OnInteract += delegate () { NayPress(); return false; };
-        GetComponent<KMBombModule>().OnActivate += OnActivate;
+		displaytext.text = "";
+		Yea.OnInteract += delegate () { ButtonPress(Yea); return false; };
+		Nay.OnInteract += delegate () { ButtonPress(Nay); return false; };
+		GetComponent<KMBombModule>().OnActivate += OnActivate;
 	}
 
 	// Use this for initialization
 	void OnActivate()
 	{
-        //The starting time of the bomb
-        float startingTime = bomb.GetTime() / 60;
+		//Gets the starting time of the bomb
+		startingTime = bomb.GetTime() / 60;
 
-        //Generates the number for the next round
-        number = UnityEngine.Random.Range(0, 10000);
+		//Generates the number for the next round
+		number = UnityEngine.Random.Range(0, 10000);
 		numbertext = number.ToString();
+
 		//Puts the number on the display and adds any needed 0s on the front for continuity.
 		while (numbertext.Length < 4)
 		{
@@ -96,97 +105,50 @@ public class DivisableNumbers : MonoBehaviour {
 		}
 		displaytext.text = numbertext;
 
+		finalNumbers[0] = number;
+
 		//Makes this the first round
 		round = 1;
 
 		//Sets the first stage counter to white
 		stages[0].material = Stagecolours[0];
 
-		//If else tree that asks the questions in the manual.
-		if (bomb.GetBatteryCount() >= 3)
+		//Works out the divisor
+		divisor = Divisor();
+
+		Debug.LogFormat("[Divisible Numbers #{0}] Your number must be divisible by {1}.", moduleId, divisor);
+
+		//Works out if the number is divisible by the divisor
+		divisible = (number % divisor == 0) & (number != 0);
+
+		if (divisible)
 		{
-			divisor = 3;
-		}
-		else if (bomb.GetOnIndicators().Count() > bomb.GetOffIndicators().Count())
-		{
-			divisor = 9;
-		}
-		else if (number < 1000)
-		{
-			divisor = 6;
-		}
-        else if (startingTime < 10)
-		{
-			divisor = 4;
-		}
-		else if (bomb.GetSerialNumberNumbers().Last() % 2 == 0)
-		{
-			divisor = 2;
-		}
-		else if (bomb.GetModuleNames().Count() > 10)
-		{
-			divisor = 5;
+			Debug.LogFormat("[Divisible Numbers #{0}] {1} is divisible by {2}.", moduleId, number, divisor);
+			finalAnswers[0] = "Yea";
 		}
 		else
 		{
-			divisor = 10;
+			Debug.LogFormat("[Divisible Numbers #{0}] {1} isn't divisible by {2}.", moduleId, number, divisor);
+			finalAnswers[0] = "Nay";
 		}
 
-		Debug.LogFormat("[Divisible Numbers #{0}] Your number must be divisable by {1}.", moduleId, divisor);
-
-		//Works out if the number is divisable by the divisor
-		divisable = (number % divisor == 0) & (number != 0);
-
-		if (divisable)
-		{
-			Debug.LogFormat("[Divisible Numbers #{0}] {1} is divisable by {2}.", moduleId, number, divisor);
-		}
-		else
-		{
-			Debug.LogFormat("[Divisible Numbers #{0}] {1} isn't divisable by {2}.", moduleId, number, divisor);
-		}
-		
 	}
 
-	//When Yea is pressed
-	void YeaPress()
+	//When a button is pressed
+	void ButtonPress(KMSelectable button)
 	{
 		if (moduleSolved)
 		{
 			return;
 		}
-		
+
 		//Makes the bomb move when you press it
-		Yea.AddInteractionPunch();
+		button.AddInteractionPunch();
 
 		//Makes a sound when you press the button.
 		GetComponent<KMAudio>().PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, transform);
 
-		if (divisable)
-		{
-			GenerateNewRound();
-		}
-		else
-		{
-			//Gives a strike and resets the module
-			GetComponent<KMBombModule>().HandleStrike();
-			Debug.LogFormat("[Divisible Numbers #{0}] Incorrect, resetting.", moduleId);
-			ResetModule();
-		}
-	}
-
-	//When Nay is pressed
-	void NayPress()
-	{
-		if (moduleSolved)
-		{
-			return;
-		}
-
-		Yea.AddInteractionPunch();
-		GetComponent<KMAudio>().PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, transform);
-
-		if (!divisable)
+		if ((button == Yea) == divisible)
 		{
 			GenerateNewRound();
 		}
@@ -205,6 +167,7 @@ public class DivisableNumbers : MonoBehaviour {
 		{
 			//Solves the module
 			stages[2].material = Stagecolours[2];
+			StartCoroutine(Swaptext("DONE"));
 			moduleSolved = true;
 			GetComponent<KMBombModule>().HandlePass();
 			Debug.LogFormat("[Divisible Numbers #{0}] Module solved.", moduleId);
@@ -214,12 +177,13 @@ public class DivisableNumbers : MonoBehaviour {
 			//Generates the number for the next round
 			number = UnityEngine.Random.Range(0, 10000);
 			numbertext = number.ToString();
+
 			//Puts the number on the display and adds any needed 0s on the front for continuity.
 			while (numbertext.Length < 4)
 			{
 				numbertext = "0" + numbertext;
 			}
-			StartCoroutine(Swaptext());
+			StartCoroutine(Swaptext(numbertext));
 
 			//changes the colours of the stage counters
 			stages[round - 1].material = Stagecolours[2];
@@ -227,16 +191,21 @@ public class DivisableNumbers : MonoBehaviour {
 
 			//Increments the round counter by one
 			round += 1;
-			//Works out if the number is divisable by the divisor
-			divisable = (number % divisor == 0) & (number != 0);
 
-			if (divisable)
+			finalNumbers[round - 1] = number;
+
+			//Works out if the number is divisible by the divisor
+			divisible = (number % divisor == 0) & (number != 0);
+
+			if (divisible)
 			{
-				Debug.LogFormat("[Divisible Numbers #{0}] {1} is divisable by {2}.", moduleId, number, divisor);
+				Debug.LogFormat("[Divisible Numbers #{0}] {1} is divisible by {2}.", moduleId, number, divisor);
+				finalAnswers[round - 1] = "Yea";
 			}
 			else
 			{
-				Debug.LogFormat("[Divisible Numbers #{0}] {1} isn't divisable by {2}.", moduleId, number, divisor);
+				Debug.LogFormat("[Divisible Numbers #{0}] {1} isn't divisible by {2}.", moduleId, number, divisor);
+				finalAnswers[round - 1] = "Nay";
 			}
 		}
 	}
@@ -244,6 +213,7 @@ public class DivisableNumbers : MonoBehaviour {
 	void ResetModule()
 	{
 		round = 1;
+
 		foreach (Renderer stage in stages)
 		{
 			stage.material = Stagecolours[1];
@@ -253,27 +223,35 @@ public class DivisableNumbers : MonoBehaviour {
 		//Generates the number for the next round
 		number = UnityEngine.Random.Range(0, 10000);
 		numbertext = number.ToString();
+
 		//Puts the number on the display and adds any needed 0s on the front for continuity.
 		while (numbertext.Length < 4)
 		{
 			numbertext = "0" + numbertext;
 		}
-		StartCoroutine(Swaptext());
+		StartCoroutine(Swaptext(numbertext));
 
-		//Works out if the number is divisable by the divisor
-		divisable = (number % divisor == 0) & (number != 0);
+		finalNumbers[0] = number;
 
-		if (divisable)
+		//Works out the divisor
+		divisor = Divisor();
+
+		//Works out if the number is divisible by the divisor
+		divisible = (number % divisor == 0) & (number != 0);
+
+		if (divisible)
 		{
-			Debug.LogFormat("[Divisible Numbers #{0}] {1} is divisable by {2}.", moduleId, number, divisor);
+			Debug.LogFormat("[Divisible Numbers #{0}] {1} is divisible by {2}.", moduleId, number, divisor);
+			finalAnswers[0] = "Yea";
 		}
 		else
 		{
-			Debug.LogFormat("[Divisible Numbers #{0}] {1} isn't divisable by {2}.", moduleId, number, divisor);
+			Debug.LogFormat("[Divisible Numbers #{0}] {1} isn't divisible by {2}.", moduleId, number, divisor);
+			finalAnswers[0] = "Nay";
 		}
 	}
 
-	IEnumerator Swaptext()
+	IEnumerator Swaptext(string endString)
 	{
 		//Removes the digits in a right to left fashion
 		for (int i = 1; i < 5; i++)
@@ -284,8 +262,41 @@ public class DivisableNumbers : MonoBehaviour {
 
 		for (int i = 1; i < 5; i++)
 		{
-			displaytext.text = numbertext.Substring(0, i);
+			displaytext.text = endString.Substring(0, i);
 			yield return new WaitForSeconds(0.15f);
+		}
+	}
+
+	int Divisor()
+	{
+		//If else tree that asks the questions in the manual.
+		if (bomb.GetBatteryCount() >= 3)
+		{
+			return 3;
+		}
+		else if (bomb.GetOnIndicators().Count() > bomb.GetOffIndicators().Count())
+		{
+			return 9;
+		}
+		else if (number < 1000)
+		{
+			return 6;
+		}
+		else if (startingTime < 10)
+		{
+			return 4;
+		}
+		else if (bomb.GetSerialNumberNumbers().Last() % 2 == 0)
+		{
+			return 2;
+		}
+		else if (bomb.GetModuleNames().Count() > 10)
+		{
+			return 5;
+		}
+		else
+		{
+			return 10;
 		}
 	}
 }

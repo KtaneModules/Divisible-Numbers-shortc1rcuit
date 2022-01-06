@@ -119,7 +119,7 @@ public class DivisableNumbers : MonoBehaviour
 		Debug.LogFormat("[Divisible Numbers #{0}] Your number must be divisible by {1}.", moduleId, divisor);
 
 		//Works out if the number is divisible by the divisor
-		divisible = (number % divisor == 0) & (number != 0);
+		divisible = (number % divisor == 0);
 
 		if (divisible)
 		{
@@ -195,7 +195,7 @@ public class DivisableNumbers : MonoBehaviour
 			finalNumbers[round - 1] = number;
 
 			//Works out if the number is divisible by the divisor
-			divisible = (number % divisor == 0) & (number != 0);
+			divisible = (number % divisor == 0);
 
 			if (divisible)
 			{
@@ -237,7 +237,7 @@ public class DivisableNumbers : MonoBehaviour
 		divisor = Divisor();
 
 		//Works out if the number is divisible by the divisor
-		divisible = (number % divisor == 0) & (number != 0);
+		divisible = (number % divisor == 0);
 
 		if (divisible)
 		{

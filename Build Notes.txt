@@ -27,3 +27,11 @@ Fixed timekeeping bug
 
 Build 1.5 notes:
 VR fix
+
+Build 1.6 notes:
+Efficiency improvements
+Changed the definition of the "first displayed number" (requires manual reprint)
+Added Souvenir support 
+
+Build 1.7 notes:
+Removed a piece of code that I have no clue why it was in there to begin with

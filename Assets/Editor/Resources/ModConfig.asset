@@ -22,7 +22,8 @@ MonoBehaviour:
     Plays commands\r\n\r\nBuild 1.3.1 notes:\r\nFixed Twitch Plays commands\r\n\r\nBuild
     1.4 notes:\r\nFixed timekeeping bug\n\nBuild 1.5 notes:\nVR fix\n\nBuild 1.6 notes:\nEfficiency
     improvements\nChanged the definition of the \"first displayed number\" (requires
-    manual reprint)\nAdded Souvenir support "
-  version: 1.6
+    manual reprint)\nAdded Souvenir support \n\nBuild 1.7 notes:\nRemoved a piece
+    of code that I have no clue why it was in there to begin with"
+  version: 1.7
   outputFolder: build
   previewImage: {fileID: 2800000, guid: 99fc510adab8b5a4d8ea8dacc88eeb25, type: 3}
